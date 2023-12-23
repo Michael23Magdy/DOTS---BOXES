@@ -2,7 +2,7 @@
 #include "Print_Patterns.h"
 #include "ANSI-color-codes.h"
 #include "Grid.h"
-#include "Player.h"
+#include "Game.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -100,8 +100,6 @@ void new_game_menu(){
     
     Player player_1 = init_player(0,1);
     Player player_2 = init_player(game_diff,2);
-    print_player(player_1);
-    print_player(player_2);
     
     int start;
     printf(MAG"1- Start Game\n");
@@ -115,7 +113,7 @@ void new_game_menu(){
     } while(start != 1 && start != 2);
 
 
-    if (start == 1) scanf("%d", &start);//Game();
+    if (start == 1) Game(player_1,player_2,game_size);
     
     
     
