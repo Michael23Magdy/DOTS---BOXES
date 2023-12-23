@@ -5,7 +5,7 @@ GameName:= DotBoxes.exe
 HDR_INC:= main.c
 HDR_INC+= Print_Patterns.c
 HDR_INC+= menu.c
-HDR_INC+= Grid.c
+#HDR_INC+= Grid.c
 HDR_INC+= Player.c
 HDR_INC+= Game.c
 

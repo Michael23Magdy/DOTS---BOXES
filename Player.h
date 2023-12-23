@@ -4,7 +4,7 @@
 #include "ANSI-color-codes.h"
 #define MAx_STR 50
 
-typedef struct Player
+struct Player
 {
     char name[MAx_STR];
     int num;

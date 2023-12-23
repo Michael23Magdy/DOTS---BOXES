@@ -98,8 +98,10 @@ void new_game_menu(){
 
     // Players
     
-    Player player_1 = init_player(0);
-    Player player_2 = init_player(game_diff);
+    Player player_1 = init_player(0,1);
+    Player player_2 = init_player(game_diff,2);
+    print_player(player_1);
+    print_player(player_2);
     
     int start;
     printf(MAG"1- Start Game\n");
