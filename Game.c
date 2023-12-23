@@ -1,16 +1,31 @@
 #include "Game.h"
 
 void Game(Player player_1, Player player_2, int size){
-    system("cls");
-    printGameName();
     Grid grid;
     init_grid(&grid, size);
-    grid.board[0][1] = -1;
-    grid.board[1][0] = -2;
-    grid.board[2][1] = -1;
-    grid.board[1][2] = -2;
-    grid.board[1][1] = -2;
-    Print_grid(&grid);
+    int player_turn=1;  //player 1 = 1 //player 2 = 0
+    while (grid.num_boxes != 0)
+    {
+        system("cls");
+        printGameName();
+        print_player(player_1);
+        print_player(player_2);
+        Print_grid(&grid);
+        /*
+        int choice;
+        printf(MAG"1- Start Game\n");
+        printf(MAG"2- Back to menu\n");
+        do{ 
+            printf(BHMAG"Choose: " reset);
+            if (scanf("%d", &start) != 1) {
+                // Invalid input (not an integer)
+                while (getchar() != '\n');  // Clear input buffer
+            }
+        } while(start != 1 && start != 2);
+        */
+    }
+    // i = (x%grid.no)
+    
 
     int a;
     scanf("%d", &a);

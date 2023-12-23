@@ -40,9 +40,11 @@ void Print_grid(Grid *grid){
     //setlocale(LC_CTYPE, "");
     //wchar_t big_circle = 0x2B24;
     //wchar_t middlescore = 0x2605;
-    printf("Boxes left: %d Lines left: %d\n", grid->num_boxes,grid->num_lines);
+    printf("                              ");
+    printf(MAG"Boxes left: %d Lines left: %d\n", grid->num_boxes,grid->num_lines);
     for (int i = 0; i <= 2*grid->size; i++){
         if (i%2==0){       //horizontal 
+            printf("                              ");
             for (int j = 0; j < 2*grid->size+1; j++)
                 if (j%2==0)
                     printf(YELHB"  " reset);
@@ -55,6 +57,7 @@ void Print_grid(Grid *grid){
                         printf(REDB"        " reset);
         }      
         else{
+            printf("                              ");
             for (int j = 0; j < 2*grid->size+1; j++){
                 if (j%2==0){
                     if(grid->board[i][j]>=0)
@@ -75,6 +78,7 @@ void Print_grid(Grid *grid){
                     
             }
             printf("\n");
+            printf("                              ");
             for (int j = 0; j < 2*grid->size+1; j++){
                 if (j%2==0){
                     if(grid->board[i][j]>=0)
@@ -95,6 +99,7 @@ void Print_grid(Grid *grid){
                     
             }
             printf("\n");
+            printf("                              ");
             for (int j = 0; j < 2*grid->size+1; j++){
                 if (j%2==0){
                     if(grid->board[i][j]>=0)

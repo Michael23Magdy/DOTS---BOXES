@@ -51,19 +51,19 @@ void menu(){
 
 void new_game_menu(){
     // Input Game Properties
-    int game_size;          // min = 2 , max = 7
+    int game_size;          // min = 2 , max = 6
     int game_mood;          // Human VS Human OR Human VS Computer
     int game_diff = 0;      // 1 for easy - 2 for hard - 0 no computer
 
 
     // GAME SIZE
     do{ 
-        printf(BHGRN"Choose Game Size (2-7): ");
+        printf(BHGRN"Choose Game Size (2-6): ");
         if (scanf("%d", &game_size) != 1) {
             // Invalid input (not an integer)
             while (getchar() != '\n');  // Clear input buffer
         }
-    } while(game_size < 2 || game_size > 7);
+    } while(game_size < 2 || game_size > 6);
     //Grid grid = init_grid(game_size);
     //Print_grid(grid);
 
