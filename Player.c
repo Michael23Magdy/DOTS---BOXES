@@ -32,6 +32,7 @@ void readLine(char str[])
     
     int ch, i=0;
     while((ch=getchar()) == ' ');
+    if (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z') str[i++] =ch ;
     while((ch=getchar()) != '\n')
     {
         if(i<MAx_STR)
