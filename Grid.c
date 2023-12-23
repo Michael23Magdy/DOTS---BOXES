@@ -6,9 +6,9 @@ void init_grid(Grid *grid, int size){
     grid->size = size;
     grid->num_boxes = size*size;
     grid->num_lines = (size+1)*size*2;
-    int no_elements_row = (size_t)(size+size+1);
+    size_t no_elements_row = (size_t)(size+size+1);
 
-    allocate_grid_memory(grid,(size_t)no_elements_row);
+    allocate_grid_memory(grid,size);
     int counter = 1;
     for (int i = 0; i < no_elements_row; i++)
         for (int j = 0; j < no_elements_row; j++)
@@ -18,19 +18,102 @@ void init_grid(Grid *grid, int size){
         
 }
 
-void allocate_grid_memory(Grid *grid, size_t size){
-    grid->board = (int**)malloc(size*sizeof(int*));
-    for (size_t i = 0; i < size; i++)
-        grid->board[i] = (int*)malloc(size*sizeof(int));
+void allocate_grid_memory(Grid *grid, int size){
+    size_t no_elements_row = (size_t)(size+size+1);
+    grid->board = (int**)malloc(no_elements_row*sizeof(int*));
+    for (size_t i = 0; i < no_elements_row; i++)
+        grid->board[i] = (int*)malloc(no_elements_row*sizeof(int));
+}
+
+void free_grid(Grid *grid) {
+    int size = grid->size;
+    size_t no_elements_row = (size_t)(size+size+1);
+    // Free memory for each row
+    for (size_t i = 0; i < no_elements_row; ++i) {
+        free(grid->board[i]);
+    }
+    // Free memory for the rows
+    free(grid->board);
 }
 
 void Print_grid(Grid *grid){
-    printf("%d %d\n", grid->size,grid->num_boxes);
-    for (int i = 0; i <= 2*grid->size+1; i++){
-        for (int j = 0; j < 2*grid->size+1; j++)
-            printf("%d", grid->board[i][j]);
+    //setlocale(LC_CTYPE, "");
+    //wchar_t big_circle = 0x2B24;
+    //wchar_t middlescore = 0x2605;
+    printf("Boxes left: %d Lines left: %d\n", grid->num_boxes,grid->num_lines);
+    for (int i = 0; i <= 2*grid->size; i++){
+        if (i%2==0){       //horizontal 
+            for (int j = 0; j < 2*grid->size+1; j++)
+                if (j%2==0)
+                    printf(YELHB"  " reset);
+                else 
+                    if(grid->board[i][j]>=0)
+                        printf("   %02d   ", grid->board[i][j]);
+                    else if (grid->board[i][j] == -1)
+                        printf(BLUB"        " reset);
+                    else if (grid->board[i][j] == -2)
+                        printf(REDB"        " reset);
+        }      
+        else{
+            for (int j = 0; j < 2*grid->size+1; j++){
+                if (j%2==0){
+                    if(grid->board[i][j]>=0)
+                    printf("  ");
+                    else if (grid->board[i][j] == -1)
+                        printf(BLUB"  " reset);
+                    else if (grid->board[i][j] == -2)
+                        printf(REDB"  " reset);
+                }
+                else {
+                    if(grid->board[i][j]>=0)
+                        printf("        ", grid->board[i][j]);
+                    else if (grid->board[i][j] == -1)
+                        printf(BLUHB"        " reset);
+                    else if (grid->board[i][j] == -2)
+                        printf(REDHB"        " reset);
+                }
+                    
+            }
+            printf("\n");
+            for (int j = 0; j < 2*grid->size+1; j++){
+                if (j%2==0){
+                    if(grid->board[i][j]>=0)
+                        printf("%02d", grid->board[i][j]);
+                    else if (grid->board[i][j] == -1)
+                        printf(BLUB"  " reset);
+                    else if (grid->board[i][j] == -2)
+                        printf(REDB"  " reset);
+                }
+                else {
+                    if(grid->board[i][j]>=0)
+                        printf("        ", grid->board[i][j]);
+                    else if (grid->board[i][j] == -1)
+                        printf(BLUHB"        " reset);
+                    else if (grid->board[i][j] == -2)
+                        printf(REDHB"        " reset);
+                }
+                    
+            }
+            printf("\n");
+            for (int j = 0; j < 2*grid->size+1; j++){
+                if (j%2==0){
+                    if(grid->board[i][j]>=0)
+                        printf("  ");
+                    else if (grid->board[i][j] == -1)
+                        printf(BLUB"  " reset);
+                    else if (grid->board[i][j] == -2)
+                        printf(REDB"  " reset);
+                }
+                else {
+                    if(grid->board[i][j]>=0)
+                        printf("        ");
+                    else if (grid->board[i][j] == -1)
+                        printf(BLUHB"        " reset);
+                    else if (grid->board[i][j] == -2)
+                        printf(REDHB"        " reset);
+                }
+            }
+        }
         printf("\n");
     }
-        
-    
 }
