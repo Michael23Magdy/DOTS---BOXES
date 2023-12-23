@@ -11,6 +11,7 @@ void Game(Player player_1, Player player_2, int size){
         print_player(player_1);
         print_player(player_2);
         Print_grid(&grid);
+        system("pause");
         /*
         int choice;
         printf(MAG"1- Start Game\n");
