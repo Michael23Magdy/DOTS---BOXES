@@ -10,8 +10,8 @@ Player init_player(int computer,int num){
     if (computer == 0)
         readLine(player.name);
     else {
-        printf("Computer");
-        strcpy(player.name, "Computer\n");
+        printf("Computer\n");
+        strcpy(player.name, "Computer");
     }
     
     player.score = 0;
