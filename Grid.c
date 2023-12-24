@@ -69,7 +69,7 @@ void Print_grid(Grid *grid){
                 }
                 else {
                     if(grid->board[i][j]>=0)
-                        printf("        ", grid->board[i][j]);
+                        printf("        ");
                     else if (grid->board[i][j] == -1)
                         printf(BLUHB"        " reset);
                     else if (grid->board[i][j] == -2)
@@ -90,7 +90,7 @@ void Print_grid(Grid *grid){
                 }
                 else {
                     if(grid->board[i][j]>=0)
-                        printf("        ", grid->board[i][j]);
+                        printf("        ");
                     else if (grid->board[i][j] == -1)
                         printf(BLUHB"        " reset);
                     else if (grid->board[i][j] == -2)
