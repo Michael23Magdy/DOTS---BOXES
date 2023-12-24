@@ -5,5 +5,6 @@
 #include "ANSI-color-codes.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 void Game(Player player_1, Player player_2, int size);
