@@ -63,6 +63,7 @@ void Game(Player player_1, Player player_2, int size){
                 continue; //pause
             }
         grid.board[line_i_idx][line_j_idx] = (is_player_turn ? -1 : -2) ;
+        grid.num_lines-- ;
         bool is_vertical_line = line_i_idx % 2 ;
         for (int i = 0; i < LINE_BOXES_COVERAGE; i++)
         {
@@ -82,6 +83,7 @@ void Game(Player player_1, Player player_2, int size){
             }
             if (is_closed)
             {
+                grid.num_boxes-- ;
                 is_turnable = true ;
                 if (is_player_turn)
                     {
