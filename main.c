@@ -5,7 +5,7 @@
 int main(){
     while(1)
     {
-        // system("cls");
+        system("cls");
         menu();
     }
     return 0;

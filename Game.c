@@ -25,13 +25,19 @@ void Game(Player player_1, Player player_2, int size){
     } ;
     int line_i_idx , line_j_idx ;
     bool is_turnable = false ;
-    while (grid.num_boxes != 0)
+    while (1)
     {
-
+        system("cls");
         printGameName();
         print_player(player_1);
         print_player(player_2);
         Print_grid(&grid);
+        if (grid.num_boxes == 0)
+        {
+            printWinner();
+            system("pause");
+            break;
+        }
         
         int line_num;
         scanf("%d", &line_num);
@@ -41,7 +47,8 @@ void Game(Player player_1, Player player_2, int size){
 
         if (line_num < 1 || line_num > lines_cnt) 
             {
-                printf("invalid line number enter a number between 1 - %d",lines_cnt);
+                printf("invalid line number enter a number between 1 - %d\n",lines_cnt);
+                system("pause");
                 continue; //pause
             }
 
@@ -59,7 +66,8 @@ void Game(Player player_1, Player player_2, int size){
         
         if (grid.board[line_i_idx][line_j_idx] == -1 || grid.board[line_i_idx][line_j_idx] == -2 )
             {
-                printf("this line is taken before");
+                printf("this line is taken before\n");
+                system("pause");
                 continue; //pause
             }
         grid.board[line_i_idx][line_j_idx] = (is_player_turn ? -1 : -2) ;
