@@ -21,7 +21,7 @@ Player init_player(int computer,int num){
 }
 
 void print_player(Player player){
-    printf(player.num == 1 ? BLU : RED"%s :%d\n", player.name, player.score);
+    printf(player.num == 1 ? BLU"%s :%d\n" : RED"%s :%d\n", player.name, player.score);
 }
 
 void readLine(char str[])
