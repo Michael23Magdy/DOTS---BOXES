@@ -1,4 +1,6 @@
 #include "Game.h"
+#include <time.h>
+#include <stdlib.h>
 static const int LINE_BOXES_COVERAGE = 2 ;
 static const int LINE_REMAINING_SIDES = 3 ;
 void update_grid_squares(Grid *grid , int player_signature,int i,int j,int dir){
@@ -8,10 +10,16 @@ void update_grid_squares(Grid *grid , int player_signature,int i,int j,int dir){
     else 
         grid->board[i + (dir ? -1 : 1)][j] = player_signature ;  
 }
+int get_random_num(int end){
+    return (rand() % end) + 1 ;
+}
 void Game(Player player_1, Player player_2, int size){
     Grid grid;
     init_grid(&grid, size);
-    int is_player_turn=1;  //player 1 = 1 //player 2 = 0
+    int is_player1_turn=1;  //player 1 = 1 //player 2 = 0
+
+    srand(time(NULL));
+
 
     int dir_array_i[2][LINE_BOXES_COVERAGE][LINE_REMAINING_SIDES] = 
     {
@@ -25,13 +33,21 @@ void Game(Player player_1, Player player_2, int size){
     } ;
     int line_i_idx , line_j_idx ;
     bool is_turnable = false ;
+    int lines_cnt = 2*(size*(size+1)) ;
+    int elements_cnt_in_row = 2*size + 1;
+    bool is_system_updated = true ;
     while (1)
     {
-        system("cls");
-        printGameName();
-        print_player(player_1);
-        print_player(player_2);
-        Print_grid(&grid);
+        if (is_system_updated)
+        {
+            system("cls");
+            printGameName();
+            print_player(player_1);
+            print_player(player_2);
+            Print_grid(&grid);
+        }
+        else 
+            is_system_updated = true ;
         if (grid.num_boxes == 0)
         {
             printWinner();
@@ -40,10 +56,11 @@ void Game(Player player_1, Player player_2, int size){
         }
         
         int line_num;
-        scanf("%d", &line_num);
+        if (!is_player1_turn && player_2.computer == 1)
+            line_num = get_random_num(lines_cnt) ;
+        else
+            scanf("%d", &line_num);
 
-        int lines_cnt = 2*(size*(size+1)) ;
-        int elements_cnt_in_row = 2*size + 1;
 
         if (line_num < 1 || line_num > lines_cnt) 
             {
@@ -66,11 +83,14 @@ void Game(Player player_1, Player player_2, int size){
         
         if (grid.board[line_i_idx][line_j_idx] == -1 || grid.board[line_i_idx][line_j_idx] == -2 )
             {
-                printf("this line is taken before\n");
-                system("pause");
-                continue; //pause
+                if (is_player1_turn || player_2.computer != 1)
+                {
+                    printf("this line is taken before\n");
+                }
+                is_system_updated =false ;
+                continue; 
             }
-        grid.board[line_i_idx][line_j_idx] = (is_player_turn ? -1 : -2) ;
+        grid.board[line_i_idx][line_j_idx] = (is_player1_turn ? -1 : -2) ;
         grid.num_lines-- ;
         bool is_vertical_line = line_i_idx % 2 ;
         for (int i = 0; i < LINE_BOXES_COVERAGE; i++)
@@ -93,7 +113,7 @@ void Game(Player player_1, Player player_2, int size){
             {
                 grid.num_boxes-- ;
                 is_turnable = true ;
-                if (is_player_turn)
+                if (is_player1_turn)
                     {
                         player_1.score++ ;
                         update_grid_squares(&grid,-player_1.num,line_i_idx,line_j_idx,i) ;
@@ -105,10 +125,9 @@ void Game(Player player_1, Player player_2, int size){
                         update_grid_squares(&grid,-player_2.num,line_i_idx,line_j_idx,i) ;
                     }
             }
-             
         }
         if (!is_turnable)
-            is_player_turn = !is_player_turn ;
+            is_player1_turn = !is_player1_turn ;
         is_turnable = false ;
     }
     free_grid(&grid);
