@@ -42,3 +42,11 @@ void printLoser(){
     printf(BRED" |______|  \\____/  |_____/  |_____/  |______| |_|  \\_\\\n" reset);
 
 }
+
+void printDraw(){
+    printf(BCYN"  ____    ____       _     __        __\n");
+    printf(BCYN" |  _ \\  |  _ \\     / \\    \\ \\      / /\n");
+    printf(BCYN" | | | | | |_) |   / _ \\    \\ \\ /\\ / / \n");
+    printf(BCYN" | |_| | |  _ <   / ___ \\    \\ V  V /  \n");
+    printf(BCYN" |____/  |_| \\_\\ /_/   \\_\\    \\_/\\_/   \n" reset);
+}

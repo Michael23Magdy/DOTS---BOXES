@@ -81,7 +81,14 @@ void Game(Player player_1, Player player_2, int size){
         // if game ended
         if (grid.num_boxes == 0)
         {
-            printWinner();
+            if (player_1.score==player_2.score)
+                printDraw();
+            else if (player_2.computer==0)
+                printWinner();
+            else if (player_1.score>player_2.score)
+                printWinner();
+            else 
+                printLoser();
             system("pause");
             break;
         }
