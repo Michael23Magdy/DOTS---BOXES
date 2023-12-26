@@ -36,6 +36,16 @@ void free_grid(Grid *grid) {
     free(grid->board);
 }
 
+void copy_grid(Grid *src_grid, Grid *dist_grid){
+    int elements_cnt_in_row = 2*src_grid->size + 1;
+    dist_grid->num_boxes=src_grid->num_boxes;
+    dist_grid->num_lines=src_grid->num_lines;
+    dist_grid->size=src_grid->size;
+        for (int i = 0; i < elements_cnt_in_row; i++)
+            for (int j = 0; j < elements_cnt_in_row; j++)
+                dist_grid->board[i][j]=src_grid->board[i][j];
+}
+
 void Print_grid(Grid *grid){
     //setlocale(LC_CTYPE, "");
     //wchar_t big_circle = 0x2B24;
