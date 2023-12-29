@@ -2,12 +2,13 @@
 #include <stdio.h>
 #include <string.h>
 #include "ANSI-color-codes.h"
-#define MAx_STR 50
+#define MAX_STR 50
 
 typedef struct 
 {
-    char name[MAx_STR];
+    char name[MAX_STR];
     int num;
+    int num_moves;
     int score;
     int computer;
 }Player ;

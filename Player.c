@@ -15,13 +15,15 @@ Player init_player(int computer,int num){
     }
     
     player.score = 0;
+    player.num_moves = 0;
     player.computer = computer;
 
     return player;
 }
 
 void print_player(Player player){
-    printf(player.num == 1 ? BLU"%s :%d\n" : RED"%s :%d\n", player.name, player.score);
+    printf(player.num == 1 ? BLU"%s :%d" : RED"%s :%d", player.name, player.score);
+    printf("\n--> Number of moves played: %d\n" reset, player.num_moves);
 }
 
 void readLine(char str[])
@@ -32,7 +34,7 @@ void readLine(char str[])
     if (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z') str[i++] =ch ;
     while((ch=getchar()) != '\n')
     {
-        if(i<MAx_STR)
+        if(i<MAX_STR)
         {
             str[i++]=ch;
         }

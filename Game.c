@@ -47,8 +47,8 @@ void Game(Player player_1, Player player_2, int size){
     bool is_system_updated = true ;
 
     // Game history
-    int player1_score_history[grid.num_lines];
-    int player2_score_history[grid.num_lines];
+    Player player1_history[grid.num_lines];
+    Player player2_history[grid.num_lines];
     int player_turn_histoty[grid.num_lines];
     Grid grid_history[grid.num_lines];
     int current_state = 0;
@@ -57,8 +57,8 @@ void Game(Player player_1, Player player_2, int size){
     {
         // save move;
         if (is_player1_turn || player_2.computer==0){
-            player1_score_history[current_state] = player_1.score;
-            player2_score_history[current_state] = player_2.score;
+            player1_history[current_state] = player_1;
+            player2_history[current_state] = player_2;
             player_turn_histoty[current_state] = is_player1_turn;
             init_grid(&grid_history[current_state], size);
             copy_grid(&grid,&grid_history[current_state]);
@@ -127,8 +127,8 @@ void Game(Player player_1, Player player_2, int size){
         else if (line_num==-2 && current_state>0 || line_num==-3 && current_state<max_state){
             // undo and redo
             current_state+=(line_num==-2)? -1:1;
-            player_1.score = player1_score_history[current_state];
-            player_2.score = player2_score_history[current_state];
+            player_1 = player1_history[current_state];
+            player_2 = player2_history[current_state];
             is_player1_turn = player_turn_histoty[current_state];
             copy_grid(&grid_history[current_state],&grid);
             continue;
@@ -165,6 +165,11 @@ void Game(Player player_1, Player player_2, int size){
                 is_system_updated =false ;
                 continue; 
             }
+        
+        if (is_player1_turn)
+            player_1.num_moves++;
+        else
+            player_2.num_moves++;
         
         // make move
         grid.board[line_i_idx][line_j_idx] = (is_player1_turn ? -1 : -2) ;
