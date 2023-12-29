@@ -84,11 +84,11 @@ void Game(Player player_1, Player player_2, int size){
             if (player_1.score==player_2.score)
                 printDraw();
             else if (player_1.score>player_2.score){
-                printf(BLU"*************** %d ***************" reset, player_1.name);
+                printf(BLU"\n%s is the\n" reset, player_1.name);
                 printWinner();
             }
             else if (player_2.computer==0){
-                printf(RED"*************** %d ***************" reset, player_2.name);
+                printf(RED"\n%s is the\n" reset, player_2.name);
                 printWinner();
             }
             else 
