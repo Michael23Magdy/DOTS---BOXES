@@ -83,10 +83,14 @@ void Game(Player player_1, Player player_2, int size){
         {
             if (player_1.score==player_2.score)
                 printDraw();
-            else if (player_2.computer==0)
+            else if (player_1.score>player_2.score){
+                printf(BLU"*************** %d ***************" reset, player_1.name);
                 printWinner();
-            else if (player_1.score>player_2.score)
+            }
+            else if (player_2.computer==0){
+                printf(RED"*************** %d ***************" reset, player_2.name);
                 printWinner();
+            }
             else 
                 printLoser();
             system("pause");
@@ -96,19 +100,24 @@ void Game(Player player_1, Player player_2, int size){
         // require input from player
         if (is_player1_turn || player_2.computer==0)
         {
-            printf(BMAG"\n0 -> Save Game | -1 -> Exit");
-            printf((current_state>0)?"| -2 -> Undo":"");
+            printf(BMAG"\n0 -> Save Game | -1 -> Exit ");
+            printf((current_state>0)?"| -2 -> Undo ":"");
             printf((current_state<max_state)?"| -3 -> Redo":"");
             printf("\nOR Enter %s's move: " reset, is_player1_turn? player_1.name: player_2.name);
         }
         
         
         // take input from player or computer
-        int line_num;
+        int line_num=-10;
+        
+
         if (!is_player1_turn && player_2.computer == 1)
             line_num = get_random_num(lines_cnt) ;
         else
-            scanf("%d", &line_num);
+            if (scanf("%d", &line_num) != 1)// Invalid input (not an integer)
+                while (getchar() != '\n');  // Clear input buffer 
+        
+            //scanf("%d", &line_num);
         
         if (line_num==-1) return;   // Exit Game;
         else if (line_num==0) {
@@ -201,7 +210,7 @@ void Game(Player player_1, Player player_2, int size){
             is_player1_turn = !is_player1_turn ;
         is_turnable = true;
 
-        // save move;
+        // save move
         if (is_player1_turn || player_2.computer==0){
             current_state++;
             max_state= current_state;

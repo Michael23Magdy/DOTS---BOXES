@@ -64,8 +64,7 @@ void new_game_menu(){
             while (getchar() != '\n');  // Clear input buffer
         }
     } while(game_size < 2 || game_size > 6);
-    //Grid grid = init_grid(game_size);
-    //Print_grid(grid);
+
 
     // GAME MOOD
     printf(BHBLU"Choose Game Mood:\n");
