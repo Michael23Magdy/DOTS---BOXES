@@ -1,8 +1,9 @@
 #include "Game.h"
+#include "Chain.h"
 #include <time.h>
 #include <stdlib.h>
-static const int LINE_BOXES_COVERAGE = 2 ;
-static const int LINE_REMAINING_SIDES = 3 ;
+
+
 void update_grid_squares(Grid *grid , int player_signature,int i,int j,int dir){
     if (i%2) 
         grid->board[i][j + (dir ? -1 : 1)] = player_signature ;
@@ -30,16 +31,7 @@ void Game(Player player_1, Player player_2, int size){
     clock_t start_time = clock();
 
 
-    int dir_array_i[2][LINE_BOXES_COVERAGE][LINE_REMAINING_SIDES] = 
-    {
-        {{1,1,2}  ,{-2,-1,-1}} ,//down up
-        {{0,-1,1},{0,-1,1}}
-    } ;
-    int dir_array_j[2][LINE_BOXES_COVERAGE][LINE_REMAINING_SIDES] = 
-    {
-        {{-1,1,0} ,{0,-1,1}},
-        {{2,1,1},{-2,-1,-1}} // r l
-    } ;
+    
     int line_i_idx , line_j_idx ;
     bool is_turnable = true ;
     int lines_cnt = 2*(size*(size+1)) ;
@@ -195,17 +187,35 @@ void Game(Player player_1, Player player_2, int size){
             {
                 grid.num_boxes-- ;
                 is_turnable = false ;
+
+                bool is_chained=0;
+                Grid test_grid;
+                init_grid(&test_grid, size);
+                
                 if (is_player1_turn)
                     {
-                        player_1.score++ ;
-                        update_grid_squares(&grid,-player_1.num,line_i_idx,line_j_idx,i) ;
-                        
+                        update_grid_squares(&grid,-player_1.num,line_i_idx,line_j_idx,i);
+                        copy_grid(&grid,&test_grid);
+                        player_1.score++;
+                        printf("%d %d\n", line_i_idx,line_j_idx);
+                        is_chained = chain_box(&test_grid,-player_1.num,line_i_idx,line_j_idx);
+                        player_1.score += is_chained*(grid.num_boxes - test_grid.num_boxes) ;
                     }
                 else 
                     {
-                        player_2.score++ ;
                         update_grid_squares(&grid,-player_2.num,line_i_idx,line_j_idx,i) ;
+                        copy_grid(&grid,&test_grid);
+                        player_2.score++;
+                        printf("%d %d\n", line_i_idx,line_j_idx);
+                        is_chained = chain_box(&test_grid,-player_2.num,line_i_idx,line_j_idx);
+                        player_2.score += is_chained*(grid.num_boxes - test_grid.num_boxes) ;
                     }
+                //Print_grid(&test_grid);
+                if (is_chained)
+                    copy_grid(&test_grid,&grid);
+                free_grid(&test_grid);
+                //system("pause");
+                break;
             }
         }
 

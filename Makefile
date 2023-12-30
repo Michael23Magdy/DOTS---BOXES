@@ -8,6 +8,8 @@ HDR_INC+= menu.c
 HDR_INC+= Grid.c
 HDR_INC+= Player.c
 HDR_INC+= Game.c
+HDR_INC+= Chain.c
+
 
 Build:
 	@g++ -o $(GameName) $(HDR_INC)
