@@ -9,6 +9,7 @@ typedef struct
     int **board;
     int num_boxes;
     int num_lines;
+    int is_player1_turn;
 } Grid;
 
 void init_grid(Grid *grid, int size);

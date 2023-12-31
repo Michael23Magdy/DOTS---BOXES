@@ -22,14 +22,12 @@ void print_time(clock_t start_time){
     int seconds = (int)(elapsed_time) % 60;
     printf(GRN"Time: %02d:%02d\n" reset, minutes, seconds);
 }
-void Game(Player player_1, Player player_2, int size){
-    Grid grid;
-    init_grid(&grid, size);
-    int is_player1_turn=1;  //player 1 = 1 //player 2 = 0
+void Game(Grid *grid,Player player_1, Player player_2, int size){
+
+    int is_player1_turn=grid->is_player1_turn;  //player 1 = 1 //player 2 = 0
 
     srand(time(NULL));
     clock_t start_time = clock();
-
 
     
     int line_i_idx , line_j_idx ;
@@ -39,13 +37,13 @@ void Game(Player player_1, Player player_2, int size){
     bool is_system_updated = true ;
 
     // Game history
-    Player player1_history[grid.num_lines];
-    Player player2_history[grid.num_lines];
-    int player_turn_histoty[grid.num_lines];
-    Grid grid_history[grid.num_lines];
+    Player player1_history[grid->num_lines];
+    Player player2_history[grid->num_lines];
+    int player_turn_histoty[grid->num_lines];
+    Grid grid_history[grid->num_lines];
     int current_state = 0;
     int max_state= 0;
-    while (1)
+    while (true)
     {
         // save move;
         if (is_player1_turn || player_2.computer==0){
@@ -53,10 +51,8 @@ void Game(Player player_1, Player player_2, int size){
             player2_history[current_state] = player_2;
             player_turn_histoty[current_state] = is_player1_turn;
             init_grid(&grid_history[current_state], size);
-            copy_grid(&grid,&grid_history[current_state]);
+            copy_grid(grid,&grid_history[current_state]);
         }
-        
-
         // if computer choose a valid move print the new grid
         if (is_system_updated)
         {
@@ -65,13 +61,13 @@ void Game(Player player_1, Player player_2, int size){
             print_player(player_1);
             print_player(player_2);
             print_time(start_time);
-            Print_grid(&grid);
+            Print_grid(grid);
         }
         else 
             is_system_updated = true ;
 
         // if game ended
-        if (grid.num_boxes == 0)
+        if (grid->num_boxes == 0)
         {
             if (player_1.score==player_2.score)
                 printDraw();
@@ -113,7 +109,15 @@ void Game(Player player_1, Player player_2, int size){
         
         if (line_num==-1) return;   // Exit Game;
         else if (line_num==0) {
-            //save game
+            int file_num ;
+            do{ 
+                printf(BHGRN"Choose saved number (1-5): ");
+                if (scanf("%d", &file_num) != 1) {
+                    while (getchar() != '\n');  
+                }
+            } while(file_num > 5 || file_num  < 1);
+            grid->is_player1_turn = is_player1_turn ;
+            save_data(grid,file_num,&player_1,&player_2) ;
             continue;
         }
         else if (line_num==-2 && current_state>0 || line_num==-3 && current_state<max_state){
@@ -122,7 +126,7 @@ void Game(Player player_1, Player player_2, int size){
             player_1 = player1_history[current_state];
             player_2 = player2_history[current_state];
             is_player1_turn = player_turn_histoty[current_state];
-            copy_grid(&grid_history[current_state],&grid);
+            copy_grid(&grid_history[current_state],grid);
             continue;
         }
         
@@ -148,7 +152,7 @@ void Game(Player player_1, Player player_2, int size){
             }
 
         // check coordinates validity
-        if (grid.board[line_i_idx][line_j_idx] == -1 || grid.board[line_i_idx][line_j_idx] == -2 )
+        if (grid->board[line_i_idx][line_j_idx] == -1 || grid->board[line_i_idx][line_j_idx] == -2 )
             {
                 if (is_player1_turn || player_2.computer == 0)
                 {
@@ -164,8 +168,8 @@ void Game(Player player_1, Player player_2, int size){
             player_2.num_moves++;
         
         // make move
-        grid.board[line_i_idx][line_j_idx] = (is_player1_turn ? -1 : -2) ;
-        grid.num_lines-- ;
+        grid->board[line_i_idx][line_j_idx] = (is_player1_turn ? -1 : -2) ;
+        grid->num_lines-- ;
         bool is_vertical_line = line_i_idx % 2 ;
         for (int i = 0; i < LINE_BOXES_COVERAGE; i++)
         {
@@ -181,11 +185,11 @@ void Game(Player player_1, Player player_2, int size){
                         is_closed = 0 ;
                         break;
                     }
-                is_closed &= (grid.board[tmp_i][tmp_j] == -1 || grid.board[tmp_i][tmp_j] == -2) ;
+                is_closed &= (grid->board[tmp_i][tmp_j] == -1 || grid->board[tmp_i][tmp_j] == -2) ;
             }
             if (is_closed)
             {
-                grid.num_boxes-- ;
+                grid->num_boxes-- ;
                 is_turnable = false ;
 
                 bool is_chained=0;
@@ -194,25 +198,25 @@ void Game(Player player_1, Player player_2, int size){
                 
                 if (is_player1_turn)
                     {
-                        update_grid_squares(&grid,-player_1.num,line_i_idx,line_j_idx,i);
-                        copy_grid(&grid,&test_grid);
+                        update_grid_squares(grid,-player_1.num,line_i_idx,line_j_idx,i);
+                        copy_grid(grid,&test_grid);
                         player_1.score++;
                         printf("%d %d\n", line_i_idx,line_j_idx);
                         is_chained = chain_box(&test_grid,-player_1.num,line_i_idx,line_j_idx);
-                        player_1.score += is_chained*(grid.num_boxes - test_grid.num_boxes) ;
+                        player_1.score += is_chained*(grid->num_boxes - test_grid.num_boxes) ;
                     }
                 else 
                     {
-                        update_grid_squares(&grid,-player_2.num,line_i_idx,line_j_idx,i) ;
-                        copy_grid(&grid,&test_grid);
+                        update_grid_squares(grid,-player_2.num,line_i_idx,line_j_idx,i) ;
+                        copy_grid(grid,&test_grid);
                         player_2.score++;
                         printf("%d %d\n", line_i_idx,line_j_idx);
                         is_chained = chain_box(&test_grid,-player_2.num,line_i_idx,line_j_idx);
-                        player_2.score += is_chained*(grid.num_boxes - test_grid.num_boxes) ;
+                        player_2.score += is_chained*(grid->num_boxes - test_grid.num_boxes) ;
                     }
                 //Print_grid(&test_grid);
                 if (is_chained)
-                    copy_grid(&test_grid,&grid);
+                    copy_grid(&test_grid,grid);
                 free_grid(&test_grid);
                 //system("pause");
                 break;
@@ -232,8 +236,7 @@ void Game(Player player_1, Player player_2, int size){
         }
         
     }
-    free_grid(&grid);
-    for (int i = 0; i < grid.num_lines; i++)
+    for (int i = 0; i < grid->num_lines; i++)
         free_grid(&grid_history[i]);
 }
 

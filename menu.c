@@ -1,14 +1,20 @@
 #include "menu.h"
 #include "Print_Patterns.h"
 #include "ANSI-color-codes.h"
-#include "Grid.h"
 #include "Game.h"
+#include"file_handling.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-
-void new_game_menu();
-
+int get_input(){
+    int saved_num;
+    do{ 
+        printf(BHGRN"Choose saved number (1-5): ");
+        if (scanf("%d", &saved_num) != 1) {
+            while (getchar() != '\n');  
+        }
+        } while(!(saved_num <= 5 || saved_num >= 1 || saved_num == -1));
+    return saved_num;
+}
 void menu(){
     // Print menu
     printGameName();
@@ -28,13 +34,27 @@ void menu(){
         }
     } while(operation != 1 && operation != 2 && operation != 3 && operation != 4);
     //printf("The larger filled circle symbol is: %lc\n", L'\x2B24');
-    if(operation == 1){
-        // NEW GAME
-        new_game_menu();
-    }
-    
-    if(operation == 2){
-        // Load GAME
+    if(operation <= 2){
+        Grid grid ;
+        if (operation == 1)
+            new_game_menu(&grid);
+        else 
+            {
+                Player player_one,player_two ;
+                int saved_num = get_input() ;
+
+                while(true) 
+                {
+                    if (saved_num == -1) return;
+                    if (load_data(&grid,saved_num,&player_one,&player_two))
+                        break;
+                    printf("Can't load this file\n") ;
+                    saved_num = get_input() ;
+                }
+
+                Game(&grid,player_one,player_two,grid.size);
+            }
+        free_grid(&grid);
 
     }
     if(operation == 3){
@@ -49,7 +69,7 @@ void menu(){
     };
 }
 
-void new_game_menu(){
+void new_game_menu(Grid *grid){
     // Input Game Properties
     int game_size;          // min = 2 , max = 6
     int game_mood;          // Human VS Human OR Human VS Computer
@@ -112,7 +132,10 @@ void new_game_menu(){
     } while(start != 1 && start != 2);
 
 
-    if (start == 1) Game(player_1,player_2,game_size);
+    if (start == 1) {
+        init_grid(grid,game_size) ;
+        Game(grid,player_1,player_2,game_size);
+    }
     
     
     

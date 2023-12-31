@@ -6,6 +6,7 @@ void init_grid(Grid *grid, int size){
     grid->size = size;
     grid->num_boxes = size*size;
     grid->num_lines = (size+1)*size*2;
+    grid->is_player1_turn = 1 ;
     size_t no_elements_row = (size_t)(size+size+1);
 
     allocate_grid_memory(grid,size);
