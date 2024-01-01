@@ -11,7 +11,8 @@ typedef struct
     int num_moves;
     int score;
     int computer;
-}Player ;
+    int top_players_rank ;
+} Player ;
 
 Player init_player(int computer,int num);
 void readLine(char str[]);

@@ -22,9 +22,11 @@ void print_time(clock_t start_time){
     int seconds = (int)(elapsed_time) % 60;
     printf(GRN"Time: %02d:%02d\n" reset, minutes, seconds);
 }
-void Game(Grid *grid,Player player_1, Player player_2, int size){
+void Game(Grid *grid,Player player_1, Player player_2, int size,TopTenPlayers *top_10){
 
     int is_player1_turn=grid->is_player1_turn;  //player 1 = 1 //player 2 = 0
+    printf("%d\n",top_10->players_cnt) ;
+    system("pause");
 
     srand(time(NULL));
     clock_t start_time = clock();
@@ -69,6 +71,15 @@ void Game(Grid *grid,Player player_1, Player player_2, int size){
         // if game ended
         if (grid->num_boxes == 0)
         {
+            if (player_1.score > player_2.score)
+                add_player(top_10,&player_1) ;
+            else if (player_2.score > player_1.score)
+            {
+                if (player_2.computer == 0)
+                    add_player(top_10,&player_2) ;
+            }
+            save_top10_data(top_10);
+
             if (player_1.score==player_2.score)
                 printDraw();
             else if (player_1.score>player_2.score){

@@ -15,8 +15,9 @@ int get_input(){
         } while(!(saved_num <= 5 || saved_num >= 1 || saved_num == -1));
     return saved_num;
 }
-void menu(){
+void menu(TopTenPlayers *top_10){
     // Print menu
+
     printGameName();
     printf(BHMAG"MENU ( choose a number )\n");
     printf(MAG"1- New Game\n");
@@ -37,7 +38,7 @@ void menu(){
     if(operation <= 2){
         Grid grid ;
         if (operation == 1)
-            new_game_menu(&grid);
+            new_game_menu(&grid,top_10);
         else 
             {
                 Player player_one,player_two ;
@@ -52,14 +53,18 @@ void menu(){
                     saved_num = get_input() ;
                 }
 
-                Game(&grid,player_one,player_two,grid.size);
+                Game(&grid,player_one,player_two,grid.size,top_10);
             }
         free_grid(&grid);
 
     }
     if(operation == 3){
-        // VIEW RANKS
+        if (load_top10_data(top_10))
+            print_top_players(top_10) ;
+        else 
+            printf("Error opening file for reading.\n");
 
+        system("pause") ;
     }
 
     if(operation == 4){
@@ -69,7 +74,7 @@ void menu(){
     };
 }
 
-void new_game_menu(Grid *grid){
+void new_game_menu(Grid *grid,TopTenPlayers *top_10){
     // Input Game Properties
     int game_size;          // min = 2 , max = 6
     int game_mood;          // Human VS Human OR Human VS Computer
@@ -134,7 +139,7 @@ void new_game_menu(Grid *grid){
 
     if (start == 1) {
         init_grid(grid,game_size) ;
-        Game(grid,player_1,player_2,game_size);
+        Game(grid,player_1,player_2,game_size,top_10);
     }
     
     

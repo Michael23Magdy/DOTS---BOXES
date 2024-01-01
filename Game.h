@@ -4,11 +4,12 @@
 #include "Print_Patterns.h"
 #include "ANSI-color-codes.h"
 #include "file_handling.h"
+#include "top10.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
-void Game(Grid *grid, Player player_1 , Player player_2, int size);
+void Game(Grid *grid, Player player_1 , Player player_2, int size,TopTenPlayers *top_10);
 static const int LINE_BOXES_COVERAGE = 2 ;
 static const int LINE_REMAINING_SIDES = 3 ;
 
