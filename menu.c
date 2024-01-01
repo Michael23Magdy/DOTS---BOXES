@@ -81,7 +81,6 @@ bool new_game_menu(Grid *grid,TopTenPlayers *top_10){
     // Input Game Properties
     int game_size;          // min = 2 , max = 6
     int game_mood;          // Human VS Human OR Human VS Computer
-    int game_diff = 0;      // 1 for easy - 2 for hard - 0 no computer
 
 
     // GAME SIZE
@@ -109,7 +108,7 @@ bool new_game_menu(Grid *grid,TopTenPlayers *top_10){
     // Players
     
     Player player_1 = init_player(0,1);
-    Player player_2 = init_player(game_diff,2);
+    Player player_2 = init_player(game_mood-1,2);
     
     int start;
     printf(MAG"1- Start Game\n");
