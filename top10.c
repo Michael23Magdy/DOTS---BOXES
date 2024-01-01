@@ -4,6 +4,15 @@
 #include "top10.h"
 
 bool add_player(TopTenPlayers *top10, Player *player) {
+    for (int i = 0; i < top10->players_cnt; i++)
+    {
+        if(strcmp(player->name,top10->players_list[i].name) == 0){
+            top10->players_list[i] = *player;
+                sort(top10) ;
+            return true;
+        }
+    }
+    
     player->top_players_rank = ++(top10->players_added_cnt) ;
     if (top10->players_cnt < MAX_PLAYERS) {
         {
