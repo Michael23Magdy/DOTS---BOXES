@@ -105,7 +105,7 @@ bool new_game_menu(Grid *grid,TopTenPlayers *top_10){
             while (getchar() != '\n');  // Clear input buffer
         }
     } while(game_mood != 1 && game_mood != 2);
-
+    getchar();
     // Players
     
     Player player_1 = init_player(0,1);
