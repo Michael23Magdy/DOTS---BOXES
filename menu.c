@@ -38,7 +38,10 @@ void menu(TopTenPlayers *top_10){
     if(operation <= 2){
         Grid grid ;
         if (operation == 1)
-            new_game_menu(&grid,top_10);
+            {
+                if (!new_game_menu(&grid,top_10))
+                    return ;
+            }
         else 
             {
                 Player player_one,player_two ;
@@ -74,7 +77,7 @@ void menu(TopTenPlayers *top_10){
     };
 }
 
-void new_game_menu(Grid *grid,TopTenPlayers *top_10){
+bool new_game_menu(Grid *grid,TopTenPlayers *top_10){
     // Input Game Properties
     int game_size;          // min = 2 , max = 6
     int game_mood;          // Human VS Human OR Human VS Computer
@@ -123,8 +126,7 @@ void new_game_menu(Grid *grid,TopTenPlayers *top_10){
     if (start == 1) {
         init_grid(grid,game_size) ;
         Game(grid,player_1,player_2,game_size,top_10);
+        return true ;
     }
-    
-    
-    
+    return false ;
 }

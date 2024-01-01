@@ -25,10 +25,11 @@ bool add_player(TopTenPlayers *top10, Player *player) {
 }
 
 void print_top_players(TopTenPlayers *top10) {
-    printf("Top 10 Players:\n");
+    printf(YEL"Top 10 Players:\n");
     for (int i = 0; i < top10->players_cnt; ++i) {
         printf("%d. %s %d\n", i + 1, top10->players_list[i].name,top10->players_list[i].score);
     }
+    printf(" " reset);
 }
 
 void shift_right(TopTenPlayers *top10, int idx) {

@@ -71,7 +71,7 @@ void Game(Grid *grid,Player player_1, Player player_2, int size,TopTenPlayers *t
         if (grid->num_boxes == 0)
         {
             if (player_1.score > player_2.score)
-                is_top_10 = (top_10,&player_1) ;
+                is_top_10 = add_player(top_10,&player_1) ;
             else if (player_2.score > player_1.score)
             {
                 if (player_2.computer == 0)
