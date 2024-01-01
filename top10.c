@@ -3,11 +3,13 @@
 #include <stdlib.h>
 #include "top10.h"
 
-void add_player(TopTenPlayers *top10, Player *player) {
+bool add_player(TopTenPlayers *top10, Player *player) {
     player->top_players_rank = ++(top10->players_added_cnt) ;
     if (top10->players_cnt < MAX_PLAYERS) {
         {
             top10->players_list[top10->players_cnt++] = *player;
+                sort(top10) ;
+            return true;
         }
 
     } else {
@@ -15,11 +17,11 @@ void add_player(TopTenPlayers *top10, Player *player) {
             if (player->score > top10->players_list[i].score) {
                 shift_right(top10, i);
                 top10->players_list[i] = *player;
-                break;
+                return true;
             }
         }
     }
-    sort(top10) ;
+    return false;
 }
 
 void print_top_players(TopTenPlayers *top10) {

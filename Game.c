@@ -25,13 +25,12 @@ void print_time(clock_t start_time){
 void Game(Grid *grid,Player player_1, Player player_2, int size,TopTenPlayers *top_10){
 
     int is_player1_turn=grid->is_player1_turn;  //player 1 = 1 //player 2 = 0
-    printf("%d\n",top_10->players_cnt) ;
     system("pause");
 
     srand(time(NULL));
     clock_t start_time = clock();
 
-    
+    bool is_top_10 = false ;
     int line_i_idx , line_j_idx ;
     bool is_turnable = true ;
     int lines_cnt = 2*(size*(size+1)) ;
@@ -72,11 +71,11 @@ void Game(Grid *grid,Player player_1, Player player_2, int size,TopTenPlayers *t
         if (grid->num_boxes == 0)
         {
             if (player_1.score > player_2.score)
-                add_player(top_10,&player_1) ;
+                is_top_10 = (top_10,&player_1) ;
             else if (player_2.score > player_1.score)
             {
                 if (player_2.computer == 0)
-                    add_player(top_10,&player_2) ;
+                    is_top_10 = add_player(top_10,&player_2) ;
             }
             save_top10_data(top_10);
 
@@ -92,6 +91,8 @@ void Game(Grid *grid,Player player_1, Player player_2, int size,TopTenPlayers *t
             }
             else 
                 printLoser();
+            if (is_top_10)
+                print_top_players(top_10) ;
             system("pause");
             break;
         }

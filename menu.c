@@ -103,23 +103,6 @@ void new_game_menu(Grid *grid,TopTenPlayers *top_10){
         }
     } while(game_mood != 1 && game_mood != 2);
 
-
-
-    // GAME diff
-    if (game_mood==2){
-        printf(BHRED"Choose Game Difficulty:\n");
-        printf(RED"1- Easy\n");
-        printf(RED"2- Hard\n");
-
-        do{ 
-            printf(BHRED"Choose: " reset);
-            if (scanf("%d", &game_diff) != 1) {
-                // Invalid input (not an integer)
-                while (getchar() != '\n');  // Clear input buffer
-            }
-        } while(game_diff != 1 && game_diff != 2);
-    }
-
     // Players
     
     Player player_1 = init_player(0,1);

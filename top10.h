@@ -10,7 +10,7 @@ typedef struct {
     int players_added_cnt ;
 } TopTenPlayers;
 
-void add_player(TopTenPlayers *top10, Player *player);
+bool add_player(TopTenPlayers *top10, Player *player);
 void print_top_players(TopTenPlayers *top10);
 void shift_right(TopTenPlayers *top10, int idx);
 int compare_score(const void *a, const void *b);
