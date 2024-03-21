@@ -1,6 +1,9 @@
 # Dots & Boxes Programming Project
 
 <img src="https://github.com/Michael23Magdy/DOTS---BOXES/assets/69451992/9b031b25-1496-4cfc-bd93-0fcfcada3be9" width="200" height="200" />
+<img src="https://github.com/Michael23Magdy/DOTS---BOXES/assets/69451992/8552a667-2acd-4eb7-9881-eec91ce25a0a" width="200" height="200" />
+<img src="https://github.com/Michael23Magdy/DOTS---BOXES/assets/69451992/16e4687b-2948-4cdc-a02a-f33b4a921aba" width="200" height="200" />
+<img src="https://github.com/Michael23Magdy/DOTS---BOXES/assets/69451992/040afc80-1a65-44f6-b763-c1978aa1788d" width="200" height="200" />
 
 
 Welcome to the Dots & Boxes programming project, created by Michael Magdy Naguib and Mohamed Sabry Mansour. This project aims to bring the classic pencil-and-paper game to life in a digital format, offering players the opportunity to enjoy a strategic and engaging gaming experience.
